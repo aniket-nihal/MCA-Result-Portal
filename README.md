@@ -45,21 +45,9 @@ Percentage = Total Marks Obtained / Maximum Marks * 100
 
 The application follows a layered web architecture where the browser interface communicates with Flask routes, Flask applies authentication and business rules, SQLAlchemy handles data access, and the database stores academic records.
 
-### Architecture Color Palette
-
-| Color | Represents |
-|---|---|
-| Blue | Frontend / browser interface |
-| Indigo | Flask routes and backend control |
-| Purple | Authentication and authorization |
-| Orange | Business logic and validation |
-| Green | Database and persistence |
-| Cyan | Deployment and static assets |
-
 ### High-Level Architecture
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#eef4ff', 'primaryTextColor': '#182033', 'lineColor': '#3558d7', 'fontFamily': 'Arial' }}}%%
 flowchart LR
     U[Users\nAdmin / Teacher / Faculty / Student] --> B[Browser UI\nHTML + CSS + Bootstrap + JS]
     B --> R[Flask Routes\napp.py]
@@ -67,22 +55,6 @@ flowchart LR
     R --> L[Business Logic Layer\nMarks, Grades, Notices, Users]
     L --> O[SQLAlchemy ORM]
     O --> D[(SQLite / PostgreSQL Database)]
-
-    classDef user fill:#fef3c7,stroke:#f59e0b,color:#111827,stroke-width:2px
-    classDef frontend fill:#dbeafe,stroke:#2563eb,color:#0f172a,stroke-width:2px
-    classDef backend fill:#e0e7ff,stroke:#4f46e5,color:#111827,stroke-width:2px
-    classDef auth fill:#f3e8ff,stroke:#7c3aed,color:#111827,stroke-width:2px
-    classDef logic fill:#ffedd5,stroke:#f97316,color:#111827,stroke-width:2px
-    classDef orm fill:#cffafe,stroke:#0891b2,color:#111827,stroke-width:2px
-    classDef db fill:#dcfce7,stroke:#16a34a,color:#111827,stroke-width:2px
-
-    class U user
-    class B frontend
-    class R backend
-    class A auth
-    class L logic
-    class O orm
-    class D db
 ```
 
 ### Layered Design
@@ -100,7 +72,6 @@ flowchart LR
 ### Request Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'actorBkg': '#dbeafe', 'actorBorder': '#2563eb', 'actorTextColor': '#111827', 'signalColor': '#3558d7', 'signalTextColor': '#182033', 'activationBkgColor': '#eef4ff', 'activationBorderColor': '#7c3aed', 'fontFamily': 'Arial' }}}%%
 sequenceDiagram
     participant User
     participant Browser
@@ -121,7 +92,6 @@ sequenceDiagram
 ### Role-Based Access Architecture
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#eef4ff', 'primaryTextColor': '#182033', 'lineColor': '#3558d7', 'fontFamily': 'Arial' }}}%%
 flowchart TD
     Login[Login] --> Role{User Role}
     Role --> Admin[Admin Dashboard]
@@ -146,22 +116,6 @@ flowchart TD
     Student --> MyResult[My Result Card]
     Student --> Profile[Profile]
     Student --> StudentNotices[View Notices]
-
-    classDef entry fill:#dbeafe,stroke:#2563eb,color:#111827,stroke-width:2px
-    classDef decision fill:#fef3c7,stroke:#f59e0b,color:#111827,stroke-width:2px
-    classDef admin fill:#fee2e2,stroke:#dc2626,color:#111827,stroke-width:2px
-    classDef teacher fill:#e0e7ff,stroke:#4f46e5,color:#111827,stroke-width:2px
-    classDef faculty fill:#dcfce7,stroke:#16a34a,color:#111827,stroke-width:2px
-    classDef student fill:#f3e8ff,stroke:#7c3aed,color:#111827,stroke-width:2px
-    classDef module fill:#f8fafc,stroke:#94a3b8,color:#111827,stroke-width:1.5px
-
-    class Login entry
-    class Role decision
-    class Admin,Users,Subjects,Results,Passwords admin
-    class Teacher,Upload teacher
-    class Faculty,Notices faculty
-    class Student,MyResult,Profile,StudentNotices student
-    class Analytics module
 ```
 
 ### Database Architecture
@@ -169,7 +123,6 @@ flowchart TD
 Main SQLAlchemy models:
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#eef4ff', 'primaryTextColor': '#182033', 'lineColor': '#3558d7', 'entityBkg': '#dbeafe', 'entityBorder': '#2563eb', 'fontFamily': 'Arial' }}}%%
 erDiagram
     USER ||--o{ RESULT : has
     SUBJECT ||--o{ RESULT : contains
@@ -233,7 +186,6 @@ erDiagram
 ### Result Calculation Architecture
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#eef4ff', 'primaryTextColor': '#182033', 'lineColor': '#3558d7', 'fontFamily': 'Arial' }}}%%
 flowchart LR
     I[Internal Marks] --> T[Total Obtained Marks]
     E[External Marks] --> T
@@ -241,18 +193,6 @@ flowchart LR
     M[Subject Max Marks] --> P
     P --> G[Grade Assignment]
     G --> R[Result Card + Analytics]
-
-    classDef input fill:#dbeafe,stroke:#2563eb,color:#111827,stroke-width:2px
-    classDef total fill:#ffedd5,stroke:#f97316,color:#111827,stroke-width:2px
-    classDef calc fill:#fef3c7,stroke:#f59e0b,color:#111827,stroke-width:2px
-    classDef grade fill:#f3e8ff,stroke:#7c3aed,color:#111827,stroke-width:2px
-    classDef output fill:#dcfce7,stroke:#16a34a,color:#111827,stroke-width:2px
-
-    class I,E,M input
-    class T total
-    class P calc
-    class G grade
-    class R output
 ```
 
 Calculation logic:
@@ -268,24 +208,11 @@ Overall Percentage = Sum of Total Obtained / Sum of Max Marks * 100
 For production, the local SQLite database should be replaced with PostgreSQL and the Flask app should be hosted on a public server.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#eef4ff', 'primaryTextColor': '#182033', 'lineColor': '#3558d7', 'fontFamily': 'Arial' }}}%%
 flowchart LR
     User[Student / Admin / Faculty] --> Domain[Public Domain / HTTPS]
     Domain --> Web[Flask App Server\nGunicorn / Hosting Platform]
     Web --> PG[(PostgreSQL Database)]
     Web --> Static[Static Assets\nCSS / JS / Images]
-
-    classDef user fill:#fef3c7,stroke:#f59e0b,color:#111827,stroke-width:2px
-    classDef domain fill:#dbeafe,stroke:#2563eb,color:#111827,stroke-width:2px
-    classDef server fill:#e0e7ff,stroke:#4f46e5,color:#111827,stroke-width:2px
-    classDef db fill:#dcfce7,stroke:#16a34a,color:#111827,stroke-width:2px
-    classDef static fill:#cffafe,stroke:#0891b2,color:#111827,stroke-width:2px
-
-    class User user
-    class Domain domain
-    class Web server
-    class PG db
-    class Static static
 ```
 
 Recommended deployment platforms:
@@ -300,21 +227,10 @@ Recommended deployment platforms:
 ### SQLite To PostgreSQL Migration Architecture
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#eef4ff', 'primaryTextColor': '#182033', 'lineColor': '#3558d7', 'fontFamily': 'Arial' }}}%%
 flowchart LR
     S[(Existing SQLite\ninstance/mca_portal.db)] --> M[migrate_sqlite_to_postgres.py]
     M --> P[(PostgreSQL Database)]
     P --> F[Flask App using DATABASE_URL]
-
-    classDef sqlite fill:#fef3c7,stroke:#f59e0b,color:#111827,stroke-width:2px
-    classDef script fill:#dbeafe,stroke:#2563eb,color:#111827,stroke-width:2px
-    classDef postgres fill:#dcfce7,stroke:#16a34a,color:#111827,stroke-width:2px
-    classDef app fill:#e0e7ff,stroke:#4f46e5,color:#111827,stroke-width:2px
-
-    class S sqlite
-    class M script
-    class P postgres
-    class F app
 ```
 
 The app uses:
