@@ -1,271 +1,394 @@
-# MCA-Result-Portal
-Built an MCA Result Portal - Academic Management System using Python Flask, SQLAlchemy, PostgreSQL/SQLite, HTML, CSS, Bootstrap, and JavaScript
-<div align="center">
+# MCA Result Portal
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=2800&pause=2000&color=6366F1&center=true&vCenter=true&width=600&lines=🎓+MCA+Result+Portal;Academic+Result+Management" alt="Typing SVG" />
+A full-stack **Academic Result Management System** built for MCA departments. The portal centralizes student results, subject records, notices, analytics, users, and administrative workflows in one clean web application.
 
-<br/>
+## Overview
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
-![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
+The MCA Result Portal helps an academic department manage results and academic communication more efficiently. It supports secure login, role-based dashboards, student result cards, internal and external marks calculation, analytics, bulk marks upload, notice board management, user management, subject management, and PostgreSQL-ready deployment.
 
-<br/>
+## Key Features
 
-> 🏫 A full-stack **Academic Result Management System** built for MCA departments — centralizing student results, analytics, notices, and administrative workflows in one clean web application.
+- Secure login with email/name and password
+- Role-based dashboards for admin, teacher, faculty, and student
+- Student result card with subject-wise marks, grade, percentage, and pass/fail status
+- Correct marks calculation using:
 
-<br/>
+```text
+Internal Marks + External Marks = Total Marks Obtained
+Percentage = Total Marks Obtained / Maximum Marks * 100
+```
 
-[![License: Academic](https://img.shields.io/badge/License-Academic-blueviolet?style=flat-square)](LICENSE)
-[![Status: Active](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)]()
-[![Made with ❤️](https://img.shields.io/badge/Made%20with-❤️-red?style=flat-square)]()
+- Performance analytics with ranking and grade distribution
+- Bulk marks upload using CSV / Excel-ready template
+- Subject add, edit, and delete management
+- User add, edit, activate/deactivate, and delete management
+- Duplicate result entry delete option
+- Notice board for events, R&D news, publication status, circulars, placements, projects, and timetable updates
+- Forgot password request workflow handled by admin
+- SQLite support for local development
+- PostgreSQL support for production deployment using `DATABASE_URL`
+- Modern responsive UI with animated 3D-style login page
 
-</div>
-
----
-
-## 📌 Table of Contents
-
-- [✨ Overview](#-overview)
-- [🚀 Key Features](#-key-features)
-- [🛠 Tech Stack](#-tech-stack)
-- [📁 Project Structure](#-project-structure)
-- [⚙️ Installation](#️-installation)
-- [🗄️ PostgreSQL Setup](#️-postgresql-setup)
-- [🧩 Modules](#-modules)
-- [📐 Marks Calculation](#-marks-calculation)
-- [🔮 Future Enhancements](#-future-enhancements)
-- [👨‍💻 Author](#-author)
-
----
-
-## ✨ Overview
-
-The **MCA Result Portal** helps academic departments manage results and communication efficiently. It supports secure login, role-based access, result cards, bulk uploads, analytics, and a full notice board — all in a modern, responsive interface.
-
----
-
-## 🚀 Key Features
-
-<table>
-<tr>
-<td>
-
-### 🔐 Authentication & Roles
-- Secure login with email/name + password
-- Role-based dashboards for **Admin**, **Teacher**, **Faculty**, **Student**
-- Forgot password workflow handled by admin
-
-</td>
-<td>
-
-### 📊 Results & Analytics
-- Subject-wise marks, grade, percentage & pass/fail
-- Performance analytics with ranking & grade distribution
-- Bulk marks upload via CSV / Excel template
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🗂️ Management
-- Subject add, edit & delete
-- User add, edit, activate/deactivate & delete
-- Duplicate result entry cleanup
-
-</td>
-<td>
-
-### 📢 Notice Board
-- Events, R&D news, publication status
-- Circulars, placements, projects & timetable updates
-
-</td>
-</tr>
-</table>
-
----
-
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
-|-------|------------|
-| ⚙️ Backend | Python Flask |
-| 🗃️ ORM | SQLAlchemy |
-| 🔑 Authentication | Flask-Login |
-| 🗄️ Database | SQLite (dev) / PostgreSQL (prod) |
-| 🎨 Frontend | HTML, CSS, Bootstrap, JavaScript |
-| 🎯 Icons | Font Awesome |
-| 📈 Charts | Chart.js |
+|---|---|
+| Backend | Python Flask |
+| ORM | SQLAlchemy |
+| Authentication | Flask-Login |
+| Database | SQLite / PostgreSQL |
+| Frontend | HTML, CSS, Bootstrap, JavaScript |
+| Icons | Font Awesome |
+| Charts | Chart.js |
 
----
+## Comprehensive Architecture Design
 
-## 📁 Project Structure
+The application follows a layered web architecture where the browser interface communicates with Flask routes, Flask applies authentication and business rules, SQLAlchemy handles data access, and the database stores academic records.
 
+### High-Level Architecture
+
+```mermaid
+flowchart LR
+    U[Users\nAdmin / Teacher / Faculty / Student] --> B[Browser UI\nHTML + CSS + Bootstrap + JS]
+    B --> R[Flask Routes\napp.py]
+    R --> A[Authentication Layer\nFlask-Login]
+    R --> L[Business Logic Layer\nMarks, Grades, Notices, Users]
+    L --> O[SQLAlchemy ORM]
+    O --> D[(SQLite / PostgreSQL Database)]
 ```
+
+### Layered Design
+
+| Layer | Responsibility |
+|---|---|
+| Presentation Layer | Jinja templates, responsive dashboard UI, forms, charts, result card, notice board |
+| Route Layer | Flask routes such as `/dashboard`, `/result/<id>`, `/upload_marks`, `/analytics`, `/users`, `/subjects` |
+| Authentication Layer | Login, logout, session handling, current user detection |
+| Authorization Layer | Role-based route access for admin, teacher, faculty, and student |
+| Business Logic Layer | Marks validation, grade calculation, analytics, bulk upload processing, password reset workflow |
+| Data Access Layer | SQLAlchemy models and relationships |
+| Database Layer | SQLite for local development and PostgreSQL for production |
+
+### Request Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Flask
+    participant Auth as Flask-Login
+    participant DB as SQLAlchemy/Database
+
+    User->>Browser: Open portal and submit request
+    Browser->>Flask: HTTP request
+    Flask->>Auth: Check login/session/role
+    Auth-->>Flask: Access allowed or denied
+    Flask->>DB: Query or update data
+    DB-->>Flask: Return records
+    Flask->>Browser: Render Jinja template
+    Browser-->>User: Display dashboard/result/page
+```
+
+### Role-Based Access Architecture
+
+```mermaid
+flowchart TD
+    Login[Login] --> Role{User Role}
+    Role --> Admin[Admin Dashboard]
+    Role --> Teacher[Teacher Dashboard]
+    Role --> Faculty[Faculty Dashboard]
+    Role --> Student[Student Dashboard]
+
+    Admin --> Users[User Management]
+    Admin --> Subjects[Subject Management]
+    Admin --> Results[Result Management]
+    Admin --> Notices[Notice Board]
+    Admin --> Passwords[Password Requests]
+    Admin --> Analytics[Analytics]
+
+    Teacher --> Upload[Upload Marks]
+    Teacher --> Analytics
+    Teacher --> Results
+
+    Faculty --> Notices
+    Faculty --> Analytics
+
+    Student --> MyResult[My Result Card]
+    Student --> Profile[Profile]
+    Student --> StudentNotices[View Notices]
+```
+
+### Database Architecture
+
+Main SQLAlchemy models:
+
+```mermaid
+erDiagram
+    USER ||--o{ RESULT : has
+    SUBJECT ||--o{ RESULT : contains
+    USER ||--o{ NOTICE : creates
+    USER ||--o{ PASSWORD_RESET_REQUEST : requests
+
+    USER {
+        int id PK
+        string name
+        string email
+        string password
+        string role
+        boolean active
+        string roll_no
+        int semester
+        string branch
+    }
+
+    SUBJECT {
+        int id PK
+        string name
+        string code
+        int semester
+        int max_marks
+        int credits
+    }
+
+    RESULT {
+        int id PK
+        int student_id FK
+        int subject_id FK
+        float marks
+        float internal
+        string exam_year
+        int uploaded_by FK
+    }
+
+    NOTICE {
+        int id PK
+        string title
+        text body
+        string category
+        string visibility
+        string audience
+        string priority
+        string status
+        boolean pinned
+    }
+
+    PASSWORD_RESET_REQUEST {
+        int id PK
+        int user_id FK
+        string email
+        text message
+        string status
+        datetime requested_at
+        datetime resolved_at
+    }
+```
+
+### Result Calculation Architecture
+
+```mermaid
+flowchart LR
+    I[Internal Marks] --> T[Total Obtained Marks]
+    E[External Marks] --> T
+    T --> P[Percentage Calculation]
+    M[Subject Max Marks] --> P
+    P --> G[Grade Assignment]
+    G --> R[Result Card + Analytics]
+```
+
+Calculation logic:
+
+```text
+Total Obtained = Internal Marks + External Marks
+Subject Percentage = Total Obtained / Subject Max Marks * 100
+Overall Percentage = Sum of Total Obtained / Sum of Max Marks * 100
+```
+
+### Deployment Architecture
+
+For production, the local SQLite database should be replaced with PostgreSQL and the Flask app should be hosted on a public server.
+
+```mermaid
+flowchart LR
+    User[Student / Admin / Faculty] --> Domain[Public Domain / HTTPS]
+    Domain --> Web[Flask App Server\nGunicorn / Hosting Platform]
+    Web --> PG[(PostgreSQL Database)]
+    Web --> Static[Static Assets\nCSS / JS / Images]
+```
+
+Recommended deployment platforms:
+
+- Render
+- Railway
+- PythonAnywhere
+- VPS server
+- College server
+- PostgreSQL providers such as Neon, Supabase, Railway, or Render PostgreSQL
+
+### SQLite To PostgreSQL Migration Architecture
+
+```mermaid
+flowchart LR
+    S[(Existing SQLite\ninstance/mca_portal.db)] --> M[migrate_sqlite_to_postgres.py]
+    M --> P[(PostgreSQL Database)]
+    P --> F[Flask App using DATABASE_URL]
+```
+
+The app uses:
+
+```text
+DATABASE_URL=postgresql://username:password@host:port/database_name
+```
+
+If `DATABASE_URL` is not set, the app falls back to SQLite for local development.
+
+## Project Structure
+
+```text
 MCA_RESULT_MANAGEMENT_SYSTEM/
-├── 📄 app.py
-├── 📄 requirements.txt
-├── 📄 migrate_sqlite_to_postgres.py
-├── 📄 POSTGRESQL_SETUP.md
-├── 📄 start_ngrok.bat
-├── 📂 templates/
-├── 📂 static/
-├── 📂 instance/
-├── 📂 uploads_tmp/
-└── 📂 presentation_assets/
+|-- app.py
+|-- requirements.txt
+|-- migrate_sqlite_to_postgres.py
+|-- POSTGRESQL_SETUP.md
+|-- start_ngrok.bat
+|-- templates/
+|-- static/
+|-- instance/
+|-- uploads_tmp/
+`-- presentation_assets/
 ```
 
----
+## Installation
 
-## ⚙️ Installation
+1. Clone the repository:
 
 ```bash
-# 1️⃣ Clone the repository
 git clone <your-repository-url>
 cd MCA_RESULT_MANAGEMENT_SYSTEM
+```
 
-# 2️⃣ Create & activate virtual environment
+2. Create and activate a virtual environment:
+
+```bash
 python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # Linux/macOS
+venv\Scripts\activate
+```
 
-# 3️⃣ Install dependencies
+3. Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
-# 4️⃣ Run the app
+4. Run the application:
+
+```bash
 python app.py
 ```
 
-🌐 Open in browser: `http://127.0.0.1:5000`
+5. Open in browser:
 
-> **🔑 Default Admin (Local Dev)**
->
-> | Field | Value |
-> |-------|-------|
-> | Email | `aniketnihal05@gmail.com` |
-> | Password | `123456` |
->
-> ⚠️ **Change credentials before production deployment!**
+```text
+http://127.0.0.1:5000
+```
 
----
+## Default Local Admin
 
-## 🗄️ PostgreSQL Setup
+For local development, the app creates a default admin account:
+
+```text
+Email: aniketnihal05@gmail.com
+Password: 123456
+```
+
+Change this before production deployment.
+
+## PostgreSQL Setup
+
+The app supports PostgreSQL using the `DATABASE_URL` environment variable.
+
+Example:
 
 ```powershell
-# Set the DATABASE_URL environment variable
 $env:DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/mca_portal"
-
-# Run the application
 python app.py
+```
 
-# Migrate existing SQLite data to PostgreSQL
+To migrate existing SQLite data into PostgreSQL:
+
+```powershell
+$env:DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/mca_portal"
 python migrate_sqlite_to_postgres.py
 ```
 
-📄 Detailed guide available in `POSTGRESQL_SETUP.md`
+More details are available in:
 
----
-
-## 📐 Marks Calculation
-
-```
-╔══════════════════════════════════════════════════════════╗
-║                                                          ║
-║   Total Marks  =  Internal Marks + External Marks        ║
-║                                                          ║
-║   Percentage   =  Total Marks Obtained                   ║
-║                   ─────────────────────  × 100           ║
-║                      Maximum Marks                       ║
-║                                                          ║
-╚══════════════════════════════════════════════════════════╝
+```text
+POSTGRESQL_SETUP.md
 ```
 
----
+## Main Modules
 
-## 🧩 Modules
+### Admin
 
-<details>
-<summary>🔴 <strong>Admin</strong> — Click to expand</summary>
-
-- Manage all users (add, edit, activate/deactivate, delete)
+- Manage users
 - Manage subjects
-- View performance analytics
-- Upload bulk marks
+- View analytics
+- Upload marks
 - Publish notices
 - Resolve forgot password requests
 - Delete duplicate result entries
 
-</details>
-
-<details>
-<summary>🟠 <strong>Teacher</strong> — Click to expand</summary>
+### Teacher
 
 - Upload marks
 - View student results
 - View analytics
 - Manage result entries
 
-</details>
-
-<details>
-<summary>🟡 <strong>Faculty</strong> — Click to expand</summary>
+### Faculty
 
 - View students
 - View analytics
 - Publish academic notices
 
-</details>
+### Student
 
-<details>
-<summary>🟢 <strong>Student</strong> — Click to expand</summary>
-
-- View personal dashboard
+- View dashboard
 - View personal result card
 - View notices
 - Manage profile
 
-</details>
+## Screenshots
 
----
+Screenshots used for the project presentation are available in:
 
-## 🔮 Future Enhancements
+```text
+presentation_assets/
+```
 
-| # | Enhancement |
-|---|-------------|
-| 📱 | PWA support for installable mobile/desktop app |
-| 📄 | PDF result card export |
-| 📧 | Email/SMS notifications |
-| 🔍 | Audit logs for admin actions |
-| 📊 | CGPA and semester-wise reports |
-| 💾 | Hosted PostgreSQL automatic backups |
+## Presentation
 
----
+A detailed PowerPoint presentation is included:
 
-## 📊 Project Presentation
+```text
+MCA_Result_Portal_Presentation.pptx
+```
 
-A detailed PowerPoint presentation (`MCA_Result_Portal_Presentation.pptx`) covers:
+It explains the project overview, problem statement, objectives, modules, database design, PostgreSQL migration, security, deployment, and future scope.
 
-> Project Overview • Problem Statement • Objectives • Modules • Database Design • PostgreSQL Migration • Security • Deployment • Future Scope
+## Future Enhancements
 
-Screenshots are available in `presentation_assets/`.
+- Add PWA support for installable mobile/desktop app experience
+- Add PDF result card export
+- Add email/SMS notifications
+- Add audit logs for admin actions
+- Add CGPA and semester-wise reports
+- Add hosted PostgreSQL backups
 
----
-
-## 👨‍💻 Author
-
-<div align="center">
+## Author
 
 **Aniket Nihal**
 
-*This project is created for academic learning and MCA department-level result management.*
+## License
 
----
-
-⭐ **If you found this project useful, please give it a star!** ⭐
-
-</div>
+This project is created for academic learning and MCA department-level result management.
