@@ -1,6 +1,34 @@
-# MCA Result Portal
+<p align="center">
+  <img src="docs/readme-banner.svg" alt="MCA Result Portal Banner" width="100%" />
+</p>
 
-A full-stack **Academic Result Management System** built for MCA departments. The portal centralizes student results, subject records, notices, analytics, users, and administrative workflows in one clean web application.
+<h1 align="center">MCA Result Portal</h1>
+
+<p align="center">
+  <b>Academic Result & Department Management System</b>
+</p>
+
+<p align="center">
+  A full-stack web application for managing MCA student results, users, subjects, notices, analytics, password requests, and PostgreSQL-ready deployment.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Flask-111827?style=for-the-badge&logo=flask&logoColor=white" alt="Flask" />
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111827" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/Status-Active-22C55E?style=for-the-badge" alt="Status Active" />
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> |
+  <a href="#key-features">Features</a> |
+  <a href="#comprehensive-architecture-design">Architecture</a> |
+  <a href="#installation">Setup</a> |
+  <a href="#postgresql-setup">PostgreSQL</a> |
+  <a href="#main-modules">Modules</a>
+</p>
 
 ## Overview
 
